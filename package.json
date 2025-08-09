@@ -1,0 +1,26 @@
+{
+  "name": "academics-manager-capacitor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Capacitor wrapper for https://frugal-dogfish-47.convex.app with $12 Support IAP",
+  "scripts": {
+    "prepare": "npm run build || echo 'External URL mode'",
+    "android": "npx cap add android && node scripts/post-android-setup.js && npx cap open android",
+    "ios": "npx cap add ios && npx cap open ios",
+    "sync": "npx cap sync",
+    "assets": "npx @capacitor/assets generate --icon resources/icon.png --splash resources/splash.png"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.2"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.1.2",
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/ios": "^6.1.2",
+    "@capacitor/app": "^6.0.1",
+    "@capacitor/browser": "^6.0.1",
+    "@capacitor/splash-screen": "^6.0.1",
+    "@capacitor/status-bar": "^6.0.1",
+    "@capacitor-community/in-app-purchases": "^6.0.0"
+  }
+}

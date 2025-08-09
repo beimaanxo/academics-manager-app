@@ -1,0 +1,33 @@
+workflows:
+  academics_manager_android:
+    name: Android Release
+    max_build_duration: 60
+    environment:
+      vars:
+        ANDROID_APP_ID: "com.example.academicsmanager"
+      java: 17
+      node: 20
+    scripts:
+      - npm i
+      - npx cap sync android
+      - cd android && ./gradlew bundleRelease
+    artifacts:
+      - android/app/build/outputs/bundle/release/app-release.aab
+
+  academics_manager_ios:
+    name: iOS AdHoc
+    max_build_duration: 60
+    environment:
+      vars:
+        XCODE_SCHEME: "App"
+      node: 20
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - npm i
+      - npx cap sync ios
+      - cd ios && pod install
+      - cd ios && xcodebuild -scheme "$XCODE_SCHEME" -workspace App.xcworkspace -configuration Release -archivePath $CM_BUILD_DIR/build/App.xcarchive archive
+      - cd ios && xcodebuild -exportArchive -archivePath $CM_BUILD_DIR/build/App.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $CM_BUILD_DIR/build
+    artifacts:
+      - build/*.ipa
