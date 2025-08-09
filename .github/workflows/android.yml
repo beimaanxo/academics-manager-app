@@ -19,6 +19,15 @@ jobs:
           npm ci || npm i
           npm i -D typescript ts-node
 
+      # Install Android SDK + tools
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install SDK components & accept licenses
+        run: |
+          sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+          yes | sdkmanager --licenses
+
       - name: Add Android platform & sync
         run: |
           npx cap add android --skip-dependencies
@@ -32,7 +41,7 @@ jobs:
 
       - name: Build Debug APK
         working-directory: android
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug --no-daemon
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
