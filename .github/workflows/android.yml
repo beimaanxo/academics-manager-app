@@ -14,9 +14,13 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install deps & add Android platform
+      - name: Install deps (incl. ts-node)
         run: |
           npm ci || npm i
+          npm i -D typescript ts-node
+
+      - name: Add Android platform & sync
+        run: |
           npx cap add android --skip-dependencies
           npx cap sync android
 
